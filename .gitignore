@@ -1,0 +1,26 @@
+# Ignore compiled Lua files
+*.luac
+*.so
+
+# Ignore any build directories
+/build/
+
+# Ignore any logs or temporary files
+*.log
+*.tmp
+
+# Ignore any editor-specific files
+.vscode/
+.idea/
+
+# Ignore any package manager directories
+/node_modules/
+/vendor/
+
+# Ignore any system-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore any user-specific files
+*.swp
+*.swo
