@@ -23,9 +23,10 @@ Para utilizar este script, siga estos pasos:
 2. Si el subtítulo no existe, busca subtítulos en subdivx.com.
 3. Al localizar un subtítulo, se descarga y se incorpora al reproductor mpv.
 
-## Registro de eventos
+## Atajos de Teclado
 
-El script registra el evento `start-file` para recuperar automáticamente los subtítulos cuando se reproduce un nuevo archivo.
+* Presiona la tecla `s` para obtener automáticamente los subtítulos.
+* Presiona la tecla `c` para escanear archivos externos y cargar los subtítulos descargados.
 
 ---
 **Notas:**

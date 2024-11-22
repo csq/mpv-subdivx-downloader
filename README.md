@@ -22,9 +22,10 @@ To use this script, follow these steps:
 2. If the subtitle does not exist, it searches for subtitles on subdivx.com.
 3. Upon locating a subtitle, it is downloaded and incorporated into the mpv player.
 
-## Event Registration
+## Key bindings
 
-The script registers the `start-file` event to automatically fetch subtitles when a new file is played.
+* Press the `s` key to automatically fetch subtitles.
+* Press the `c` key to scan for external files and load the downloaded subtitles.
 
 ---
 **Notes:**
