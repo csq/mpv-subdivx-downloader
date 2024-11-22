@@ -22,11 +22,11 @@ end
 -- Function to check if subtitle exists in directory
 function exist_subtitle_in_dir(directory)
     local files = io.popen('ls "'..directory..'"'):lines()
-    local formats_subtitles = {'.srt', '.sub', '.ass', '.ssa', 'idx'}
+    local extensions_subtitles = {'.srt', '.sub', '.ass', '.ssa', '.idx'}
 
     for file in files do
-        for _, format in ipairs(formats_subtitles) do
-            if file:match(format..'$') then
+        for _, extension in ipairs(extensions_subtitles) do
+            if file:match(extension..'$') then
                 return true
             end
         end
@@ -35,13 +35,24 @@ function exist_subtitle_in_dir(directory)
     return false
 end
 
+-- Function to scan external files
+function scan_external_files()
+    local message = 'Scanning for external subtitle'
+
+    mp.msg.info(message)
+    mp.osd_message(message)
+    mp.commandv('rescan-external-files')
+end
 
 -- Function to find and download subtitles
-function get_subtitle()
+function find_and_download_subtitle()
     local dir, fname = get_path_and_filename()
 
     if exist_subtitle_in_dir(dir) then
-        mp.msg.info('Subtitle already exists')
+        local message = 'Subtitle already exists in directory'
+
+        mp.msg.info(message)
+        mp.osd_message(message)
         return
     end
     
@@ -49,19 +60,22 @@ function get_subtitle()
 
     local sub = os.capture('subdivx-dl -f -odownloads -l', '"' .. dir .. '"', '"' .. fname .. '"')
 
-    if string.match(sub, 'Subtitles not found') ~= nil then
-        mp.msg.info('Subtitle not found')
+    if sub:match('Subtitles not found') then
+        local message = 'No subtitles found'
+        mp.msg.info(message)
+        mp.osd_message(message)
         return
     end
 
-    if string.match(sub, 'Done') ~= nil then
-        mp.msg.info('Subtitle downloaded')
-        mp.osd_message('Subtitle found', 4)
-        mp.commandv('sub-add', sub)
+    if sub:find('Done!') then
+        local message = 'Subtitle found'
+        mp.msg.info(message)
+        mp.osd_message(message)
+        mp.commandv('rescan-external-files')
         return
     end
-
 end
 
--- Register event
-mp.register_event('start-file', get_subtitle)
+-- Register key binding
+mp.add_key_binding('s', 'subdivx-get', find_and_download_subtitle)
+mp.add_key_binding('c', 'scan-sub', scan_external_files)
