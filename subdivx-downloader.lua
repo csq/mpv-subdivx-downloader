@@ -3,6 +3,8 @@ local io = require 'io'
 -- this plugin is used to get a subtitle from subdivx.com
 -- use: mpv --script=/home/{user}/.config/mpv/scripts/subdivx-get.lua
 
+subtitle_extensions = {'.srt', '.sub', '.ass', '.ssa', '.idx'}
+
 -- Function to capture command line response
 function os.capture(cmd, ...)
     local args = table.concat({...}, ' ')
@@ -22,7 +24,6 @@ end
 -- Function to check if subtitle exists in directory
 function does_subtitle_exist_in_directory(directory)
     local file_names = io.popen('ls "'..directory..'"'):lines()
-    local subtitle_extensions = {'.srt', '.sub', '.ass', '.ssa', '.idx'}
 
     for file_name in file_names do
         for _, extension in ipairs(subtitle_extensions) do
@@ -38,13 +39,22 @@ function does_subtitle_exist_in_directory(directory)
     return false
 end
 
--- Function to scan external files
-function scan_external_files()
-    local message = 'Scanning for external subtitle'
+-- Function to apply subtitle downloaded
+function apply_subtitle_downloaded()
+    local dir, fname = get_path_and_filename()
+    local file_names = io.popen('ls "'..dir..'"'):lines()
 
-    mp.msg.info(message)
-    mp.osd_message(message)
-    mp.commandv('rescan-external-files')
+    for file_name in file_names do
+        for _, extension in ipairs(subtitle_extensions) do
+            if file_name:match(extension..'$') then
+                local expected_subtitle_name = fname:match('(.*)%..*') .. extension
+                local path_subtitle = dir .. '/' .. expected_subtitle_name
+                if file_name == expected_subtitle_name then
+                    mp.commandv('sub-add', path_subtitle)
+                end
+            end
+        end
+    end
 end
 
 -- Function to find and download subtitles
@@ -74,11 +84,10 @@ function find_and_download_subtitle()
         local message = 'Subtitle found'
         mp.msg.info(message)
         mp.osd_message(message)
-        mp.commandv('rescan-external-files')
+        apply_subtitle_downloaded()
         return
     end
 end
 
 -- Register key binding
 mp.add_key_binding('s', 'subdivx-get', find_and_download_subtitle)
-mp.add_key_binding('c', 'scan-sub', scan_external_files)
