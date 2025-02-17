@@ -7,7 +7,6 @@ Este script Lua facilita la descarga de subtítulos desde subdivx.com para integ
 * Reproductor [mpv](http://mpv.io)
 * Python con [subdivx-dl](https://github.com/csq/subdivx-dl)
 
-
 ## Uso
 
 Para utilizar este script, siga estos pasos:
@@ -23,10 +22,9 @@ Para utilizar este script, siga estos pasos:
 2. Si el subtítulo no existe, busca subtítulos en subdivx.com.
 3. Al localizar un subtítulo, se descarga y se incorpora al reproductor mpv.
 
-## Atajos de Teclado
+## Atajo de Teclado
 
 * Presiona la tecla `s` para obtener automáticamente los subtítulos.
-* Presiona la tecla `c` para escanear archivos externos y cargar los subtítulos descargados.
 
 ---
 **Notas:**

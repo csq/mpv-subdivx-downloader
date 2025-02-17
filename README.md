@@ -7,7 +7,6 @@ This Lua script facilitates the retrieval of subtitles from subdivx.com for inte
 * [mpv](http://mpv.io) player
 * python with [subdivx-dl](https://github.com/csq/subdivx-dl)
 
-
 ## Usage
 
 To use this script, follow these steps:
@@ -22,10 +21,9 @@ To use this script, follow these steps:
 2. If the subtitle does not exist, it searches for subtitles on subdivx.com.
 3. Upon locating a subtitle, it is downloaded and incorporated into the mpv player.
 
-## Key bindings
+## Key binding
 
 * Press the `s` key to automatically fetch subtitles.
-* Press the `c` key to scan for external files and load the downloaded subtitles.
 
 ---
 **Notes:**
